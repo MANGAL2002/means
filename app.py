@@ -4,38 +4,38 @@ import pickle
 
 
 app = Flask(__name__)
-model = pickle.load(open('kmeanscluster.pkl','rb'))   
+model = pickle.load(open('/home/ayushiiiii/means/kmeanscluster.pkl','rb'))
 
 
 @app.route('/')
 def home():
-  
+
     return render_template("untitled.html")
-  
+
 @app.route('/predict',methods=['GET'])
 def predict():
   '''
   For rendering results on HTML GUI
   '''
-  income = int(request.args.get('income'))
-  score = int(request.args.get('score'))
-    
-    
-  predict = model.predict([[income,score ]])
-  if predict==[0]:
-    result="Customer is careless"
+  gender= int(request.args.get('gender'))
+  glucose = int(request.args.get('glucose'))
+  bp= int(request.args.get('bp'))
+  skin_thickness= int(request.args.get('skin_thickness'))
+  insulin= int(request.args.get('insulin'))
+  bmi= int(request.args.get('bmi'))
+  pedigree_function= int(request.args.get('pedigree_function'))
+  age = int(request.args.get('age'))
 
-  elif predict==[1]:
-    result="Customer is standard"
-  elif predict==[2]:
-    result="Customer is Target"
-  elif predict==[3]:
-    result="Customer is careful"
+
+  predict = model.predict([[gender,glucose,bp,skin_thickness,insulin,bmi,pedigree_function,age]])
+  if predict==[0]:
+    result="patient willhave disease"
+
 
   else:
-    result="Custmor is sensible"
-    
-        
+    result="not disease"
+
+
   return render_template('untitled.html', prediction_text='Model  has predicted  : {}'.format(result))
 
 if __name__ == '__main__':
